@@ -565,13 +565,13 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
 
           Int_t i_entry = tot_size * i_iwritten;
-          //cout<<" i entry: "<<i_entry<<endl;
+          cout<<" i entry: "<<i_entry<<endl;
           for (i_entry ; i_entry < tot_size * (i_iwritten+1); i_entry++ )
           {
             t_effTree->GetEntry(i_entry);
             t_effValues->GetEntry(i_entry);
 
-            //cout<<" i_iwritten "<<i_iwritten<<" totEnergyFDatND_f " <<totEnergyFDatND_f<<endl;
+            cout<<" i_iwritten "<<i_iwritten<<" totEnergyFDatND_f " <<totEnergyFDatND_f<<endl;
 
             if ( ND_LAr_vtx_pos == i_ND_LAr_vtx_pos ){
 
@@ -588,7 +588,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
               // nPassThrowsPerVtx[1] = nPassThrowsPerEvent; //WRONG!!!
               int nthrowsToLoop = NPassedThrows; //this is going to be the validThrows
 
-               //cout<<" i_vtxX_plot "<<i_vtxX_plot<<" npassed throws: "<<NPassedThrows<<" passed throws / event "<<nPassThrowsPerEvent<<" weight P mu size: "<< (*weightPmuon).size()<<endl;
+               cout<<" i_vtxX_plot "<<i_vtxX_plot<<" npassed throws: "<<NPassedThrows<<" passed throws / event "<<nPassThrowsPerEvent<<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               //     <<" nPassThrowsPerVtx[i_vtxX_plot] "<<nPassThrowsPerVtx[i_vtxX_plot]
               //     <<"  nPassThrowsPerVtx[i_vtxX_plot -1] "<<  nPassThrowsPerVtx[i_vtxX_plot -1]  <<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ ){
@@ -604,7 +604,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                 info.weightPmuon = (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
                 // info.muContained = (*muContained)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
 
-              //  cout<<" ithrow = "<<ithrow<< " nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1 = "<<nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1<< " p value: "<< (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0]<<endl;
+                cout<<" ithrow = "<<ithrow<< " nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1 = "<<nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1<< " p value: "<< (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0]<<endl;
 
                 AllThrowInfo[i_iwritten][i_vtxX_plot - 1].push_back(info);
 
