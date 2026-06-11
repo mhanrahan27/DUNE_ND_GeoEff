@@ -536,6 +536,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
     AllThrowInfo.resize(nFDEvents);
     // start the loop with efficiencies etc
 
+    //print weights before for loop that is breaking
+    std::cout <<" before for loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos<< std::endl;
+    std::cout <<" before for loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos << std::endl;
+    std::cout <<" before for loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
+
     for (Int_t i_iwritten = 0; i_iwritten<nFDEvents; i_iwritten++)
     {
       cout<<" i_iwritten: "<<i_iwritten<<" weight CAF like: "<<weightCAFLike[i_iwritten]<<endl;
@@ -776,9 +781,9 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    WeightEventsAtOaPos = HistOAPos[i_iwritten]->GetBinContent(HistOAPos[i_iwritten]->FindBin(OAPos));
 
                    // print statements for debugging
-                   std::cout <<" for statement CoefficientsAtOAPos: "<<CoefficientsAtOAPos<<" " << std::endl;
-                   std::cout <<" for statement WeightEventsAtOaPos: "<<WeightEventsAtOaPos<<" " << std::endl;
-                   std::cout <<" for statement weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten]<<" " << std::endl;
+                   std::cout <<" for statement CoefficientsAtOAPos: "<<CoefficientsAtOAPos<< std::endl;
+                   std::cout <<" for statement WeightEventsAtOaPos: "<<WeightEventsAtOaPos<< std::endl;
+                   std::cout <<" for statement weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
 				   
 
 
@@ -802,16 +807,16 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
 
                       // print statements for debugging
-                      std::cout <<" for for loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos<<" " << std::endl;
-                      std::cout <<" for for loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos<<" " << std::endl;
-                      std::cout <<" for for loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten]<<" " << std::endl;
+                      std::cout <<" for for loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos << std::endl;
+                      std::cout <<" for for loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos << std::endl;
+                      std::cout <<" for for loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] " << std::endl;
                       //cout<<" rate "<< " Etrim " <<info.Etrim *1E-3<<" emu "<< info.Emu*1E-3<< "OApos " <<OAPos<<" rate: "<<FDEventRateAtND(cache, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)<<endl;
                    }
 
                    // print what we are scaling by for debugging
-                   std::cout <<" outside loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos<<" " << std::endl;
-                   std::cout <<" outside loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos<<" " << std::endl;
-                   std::cout <<" outside loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten]<<" " << std::endl;
+                   std::cout <<" outside loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos<< std::endl;
+                   std::cout <<" outside loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos << std::endl;
+                   std::cout <<" outside loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
 
                    //====scale events to 1/validThrows (alreays have nPAssingThrows events in Etrim histos. by applying weightPmuon the muon efficiency is accounted for -> integral of Etrim histo [vtxX][detPos] = CombinedEff [vtxX]
                    HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * weightCAFLike[i_iwritten] * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos);
