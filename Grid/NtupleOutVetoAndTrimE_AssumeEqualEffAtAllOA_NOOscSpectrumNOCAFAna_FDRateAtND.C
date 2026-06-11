@@ -569,7 +569,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
             t_effTree->GetEntry(i_entry);
             t_effValues->GetEntry(i_entry);
 
-            cout<<" i_iwritten "<<i_iwritten<<" totEnergyFDatND_f " <<totEnergyFDatND_f<<endl;
+            cout<<" i iwritten "<<i_iwritten<<" totEnergyFDatND_f " <<totEnergyFDatND_f<<endl;
 
             if ( ND_LAr_vtx_pos == i_ND_LAr_vtx_pos ){
 
@@ -586,7 +586,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
               // nPassThrowsPerVtx[1] = nPassThrowsPerEvent; //WRONG!!!
               int nthrowsToLoop = NPassedThrows; //this is going to be the validThrows
 
-               cout<<" i_vtxX_plot "<<i_vtxX_plot<<" npassed throws: "<<NPassedThrows<<" passed throws / event "<<nPassThrowsPerEvent<<" weight P mu size: "<< (*weightPmuon).size()<<endl;
+              cout<<" i_vtxX_plot "<<i_vtxX_plot<<" npassed throws: "<<NPassedThrows<<" passed throws / event "<<nPassThrowsPerEvent<<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               //     <<" nPassThrowsPerVtx[i_vtxX_plot] "<<nPassThrowsPerVtx[i_vtxX_plot]
               //     <<"  nPassThrowsPerVtx[i_vtxX_plot -1] "<<  nPassThrowsPerVtx[i_vtxX_plot -1]  <<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ ){
