@@ -605,8 +605,6 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
 
               } //end throw
-              NumThrowsCounter += nthrowsToLoop
-
             }// end vtx selection
           }//end ientry
         }//end vtx pos inside LAr
