@@ -809,7 +809,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                       // print statements for debugging
                       std::cout <<" for for loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos << std::endl;
                       std::cout <<" for for loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos << std::endl;
-                      std::cout <<" for for loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] " << std::endl;
+                      std::cout <<" for for loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
                       //cout<<" rate "<< " Etrim " <<info.Etrim *1E-3<<" emu "<< info.Emu*1E-3<< "OApos " <<OAPos<<" rate: "<<FDEventRateAtND(cache, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)<<endl;
                    }
 
