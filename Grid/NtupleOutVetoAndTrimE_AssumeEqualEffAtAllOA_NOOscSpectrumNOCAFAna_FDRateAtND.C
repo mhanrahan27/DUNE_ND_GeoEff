@@ -540,10 +540,8 @@ void ProcessFile(TFile *fHad, TFile *fMu){
     for (Int_t i_iwritten = 0; i_iwritten<nFDEvents; i_iwritten++)
     {
       cout<<" i_iwritten: "<<i_iwritten<<" weight CAF like: "<<weightCAFLike[i_iwritten]<<endl;
-      //print weights before for loop that is breaking
       cout<<" first for loop, CoefficientsAtOAPos: "<<CoefficientsAtOAPos<<endl;
       cout<<" first for loop, WeightEventsAtOaPos: "<<WeightEventsAtOaPos<<endl;
-      cout<<" first for loop, weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten]<<endl;
 
       if(TotalLeptonMom[i_iwritten] > 20) {
         cout<<" Emu > 20 GeV, Emu = "<<TotalLeptonMom[i_iwritten]<<" not interested in so high energies, skip event " <<endl;
