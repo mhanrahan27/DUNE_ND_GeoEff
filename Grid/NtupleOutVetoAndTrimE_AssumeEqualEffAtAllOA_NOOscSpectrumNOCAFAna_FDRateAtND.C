@@ -536,12 +536,9 @@ void ProcessFile(TFile *fHad, TFile *fMu){
     AllThrowInfo.resize(nFDEvents);
     // start the loop with efficiencies etc
 
-
     for (Int_t i_iwritten = 0; i_iwritten<nFDEvents; i_iwritten++)
     {
       cout<<" i_iwritten: "<<i_iwritten<<" weight CAF like: "<<weightCAFLike[i_iwritten]<<endl;
-      cout<<" first for loop, CoefficientsAtOAPos: "<<CoefficientsAtOAPos<<endl;
-      cout<<" first for loop, WeightEventsAtOaPos: "<<WeightEventsAtOaPos<<endl;
 
       if(TotalLeptonMom[i_iwritten] > 20) {
         cout<<" Emu > 20 GeV, Emu = "<<TotalLeptonMom[i_iwritten]<<" not interested in so high energies, skip event " <<endl;
@@ -563,13 +560,13 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
 
           Int_t i_entry = tot_size * i_iwritten;
-          cout<<" i entry: "<<i_entry<<endl;
+          //cout<<" i entry: "<<i_entry<<endl;
           for (i_entry ; i_entry < tot_size * (i_iwritten+1); i_entry++ )
           {
             t_effTree->GetEntry(i_entry);
             t_effValues->GetEntry(i_entry);
 
-            cout<<" i iwritten "<<i_iwritten<<" totEnergyFDatND_f " <<totEnergyFDatND_f<<endl;
+            //cout<<" i_iwritten "<<i_iwritten<<" totEnergyFDatND_f " <<totEnergyFDatND_f<<endl;
 
             if ( ND_LAr_vtx_pos == i_ND_LAr_vtx_pos ){
 
@@ -586,7 +583,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
               // nPassThrowsPerVtx[1] = nPassThrowsPerEvent; //WRONG!!!
               int nthrowsToLoop = NPassedThrows; //this is going to be the validThrows
 
-              cout<<" i_vtxX_plot "<<i_vtxX_plot<<" npassed throws: "<<NPassedThrows<<" passed throws / event "<<nPassThrowsPerEvent<<" weight P mu size: "<< (*weightPmuon).size()<<endl;
+               //cout<<" i_vtxX_plot "<<i_vtxX_plot<<" npassed throws: "<<NPassedThrows<<" passed throws / event "<<nPassThrowsPerEvent<<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               //     <<" nPassThrowsPerVtx[i_vtxX_plot] "<<nPassThrowsPerVtx[i_vtxX_plot]
               //     <<"  nPassThrowsPerVtx[i_vtxX_plot -1] "<<  nPassThrowsPerVtx[i_vtxX_plot -1]  <<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ ){
@@ -602,7 +599,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                 info.weightPmuon = (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
                 // info.muContained = (*muContained)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
 
-                // cout<<" ithrow = "<<ithrow<< " nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1 = "<<nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1<< " p value: "<< (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0]<<endl;
+              //  cout<<" ithrow = "<<ithrow<< " nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1 = "<<nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1<< " p value: "<< (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0]<<endl;
 
                 AllThrowInfo[i_iwritten][i_vtxX_plot - 1].push_back(info);
 
@@ -778,12 +775,6 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    CoefficientsAtOAPosHist->Fill(OAPos, CoefficientsAtOAPos);
                    WeightEventsAtOaPos = HistOAPos[i_iwritten]->GetBinContent(HistOAPos[i_iwritten]->FindBin(OAPos));
 
-                   // print statements for debugging
-                   std::cout <<" for statement CoefficientsAtOAPos: "<<CoefficientsAtOAPos<< std::endl;
-                   std::cout <<" for statement WeightEventsAtOaPos: "<<WeightEventsAtOaPos<< std::endl;
-                   std::cout <<" for statement weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
-				   
-
 
                    for (const auto& info : throwList) {
                      // if(i_iwritten == 12 && ND_LAr_vtx_pos/100.0 >= 1.6145 &&  a_ND_off_axis_pos_vec[i_detpos-1] == 0)
@@ -804,21 +795,16 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                       AllThrownEventsVsOAPosVsTotalETrim[i_iwritten]->Fill((info.Etrim + info.Emu)/1000 , OAPos, double(validThrows)/throwList.size()* 1.0/WeightEventsAtOaPos * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos));// FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
 
 
-                      // print statements for debugging
-                      std::cout <<" for for loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos << std::endl;
-                      std::cout <<" for for loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos << std::endl;
-                      std::cout <<" for for loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
+
                       //cout<<" rate "<< " Etrim " <<info.Etrim *1E-3<<" emu "<< info.Emu*1E-3<< "OApos " <<OAPos<<" rate: "<<FDEventRateAtND(cache, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)<<endl;
                    }
 
-                   // print what we are scaling by for debugging
-                   std::cout <<" outside loop CoefficientsAtOAPos: "<<CoefficientsAtOAPos<< std::endl;
-                   std::cout <<" outside loop WeightEventsAtOaPos: "<<WeightEventsAtOaPos << std::endl;
-                   std::cout <<" outside loop weightCAFLike[i_iwritten]: "<<weightCAFLike[i_iwritten] << std::endl;
-
+                   // Madi adding coefficients to scaling: 
+                   HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos);
+                   HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos);
                    //====scale events to 1/validThrows (alreays have nPAssingThrows events in Etrim histos. by applying weightPmuon the muon efficiency is accounted for -> integral of Etrim histo [vtxX][detPos] = CombinedEff [vtxX]
-                   HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * weightCAFLike[i_iwritten] * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos);
-                   HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * weightCAFLike[i_iwritten] * 1.0/WeightEventsAtOaPos); // not applying OA coefficients here
+                   // HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows );//* 1.0/WeightEventsAtOaPos);// * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos);
+                   // HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows );//* 1.0/WeightEventsAtOaPos);// * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos);
                    // for not don't write any more each individual VtxXDetPos histogram..will do so in the future probably but to speed up and empty some memory don't write it for now
                    // HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Write(HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->GetName());
                    // HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Write(HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->GetName());
