@@ -417,9 +417,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
   TH1D* HistEtrimPmuWeightedAllVtxX[nFDEvents];
 
   TH1D* HistEtrimAllVtxXTimesCoeff[nFDEvents];
+  TH1D* HistEtrimAllVtxXNoCoeff[nFDEvents];
   TH1D* HistEtrimAllVtxXTimesCoeffOscillated[nFDEvents];
 
   TH1D* HistEtrimAllVtxXTimesCoeffWithFDEvRate[nFDEvents];
+  TH1D* HistEtrimAllVtxXNoCoeffWithFDEvRate[nFDEvents];
   TH1D* HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[nFDEvents];
 
   // save histo with total hadronic energy at FD for all FD events
