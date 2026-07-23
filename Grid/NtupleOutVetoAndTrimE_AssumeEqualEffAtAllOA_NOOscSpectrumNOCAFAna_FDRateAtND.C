@@ -605,6 +605,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
                 info.Etrim = TrimEnergyEventsPass->at(ithrow);  //save trimmed hadron energy per throw
                 info.Emu   = TotalLeptonMom[i_iwritten]*1E3;
+
+                cout << "size = " << weightPmuon->size()
+                     << "  index = "
+                     << nPassThrowsPerVtx[i_vtxX_plot-1] + ithrow + 1
+                     << endl;
                 info.weightPmuon = (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
                 // info.muContained = (*muContained)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
 
@@ -675,7 +680,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
          HistEtrimAllVtxXTimesCoeff_name = Form("HistEtrimAllVtxXTimesCoeff_FDEvt_%d", i_iwritten);
         // madi added these for no coeffs:
          HistEtrimAllVtxXNoCoeff_name = Form("HistEtrimAllVtxXNoCoeff_FDEvt_%d", i_iwritten);
-         HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name = Form("HistEtrimAllVtxXNoCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten);
+         HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name = Form("HistEtrimAllVtxXNoCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten); 
        }
        else{
          HistEtrimAllVtxXTimesCoeff_name = Form("HistEtrimPmuWeightedAllVtxXTimesCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
