@@ -413,6 +413,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
   TH1D* HistEtrimDetPosWithFDEventRate[nFDEvents][nvtxXpositions][nDetPos];
   TH1D* HistEtrimDetPosCoeff1[nFDEvents][nvtxXpositions][nDetPos];
 
+  //////
+  TH1D* HistEtrimDetPosNoFDEventRateTimesCoeff[nFDEvents][nvtxXpositions][nDetPos];
+  TH1D* HistEtrimDetPosWithFDEventRateTimesCoeff[nFDEvents][nvtxXpositions][nDetPos];
+  //////
+
   TH1D* HistEtrimAllVtxX[nFDEvents];
   TH1D* HistEtrimPmuWeightedAllVtxX[nFDEvents];
 
