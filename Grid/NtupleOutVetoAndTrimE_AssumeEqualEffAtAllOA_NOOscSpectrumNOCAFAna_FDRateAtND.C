@@ -668,11 +668,21 @@ void ProcessFile(TFile *fHad, TFile *fMu){
        //only calculate the linear combination resulting Etrim for either had eff only or combined eff (more memory efficient)
        TString HistEtrimAllVtxXTimesCoeff_name;
        TString HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name;
-       if(!useCombinedEfficiency)
+       // madi declared these for no coeffs:
+       TString HistEtrimAllVtxXNoCoeff_name; 
+       TString HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name;
+       if(!useCombinedEfficiency){
          HistEtrimAllVtxXTimesCoeff_name = Form("HistEtrimAllVtxXTimesCoeff_FDEvt_%d", i_iwritten);
+        // madi added these for no coeffs:
+         HistEtrimAllVtxXNoCoeff_name = Form("HistEtrimAllVtxXNoCoeff_FDEvt_%d", i_iwritten);
+         HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name = Form("HistEtrimAllVtxXNoCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten);
+       }
        else{
          HistEtrimAllVtxXTimesCoeff_name = Form("HistEtrimPmuWeightedAllVtxXTimesCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
          HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name = Form("HistEtrimPmuWeightedAllVtxXTimesCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten);
+        // madi added these for no coeffs:
+         HistEtrimAllVtxXNoCoeff_name = Form("HistEtrimPmuWeightedAllVtxXNoCoeff_NoFDEvRate_FDEvt_%d", i_iwritten); 
+         HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name = Form("HistEtrimPmuWeightedAllVtxXNoCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten); 
        }
 
        HistEtrimAllVtxXTimesCoeff[i_iwritten] = new TH1D(HistEtrimAllVtxXTimesCoeff_name, HistEtrimAllVtxXTimesCoeff_name, 25000, 0, 25000);
