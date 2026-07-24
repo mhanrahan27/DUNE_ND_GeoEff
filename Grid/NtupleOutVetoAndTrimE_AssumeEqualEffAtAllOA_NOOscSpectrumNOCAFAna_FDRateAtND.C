@@ -547,9 +547,6 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
     for (Int_t i_iwritten = 0; i_iwritten<nFDEvents; i_iwritten++)
     {
-      cout << "Hello" << endl;
-      cout<<" i_iwritten: "<<i_iwritten<<" weight CAF like: "<<weightCAFLike[i_iwritten]<<endl;
-
       if(TotalLeptonMom[i_iwritten] > 20) {
         cout<<" Emu > 20 GeV, Emu = "<<TotalLeptonMom[i_iwritten]<<" not interested in so high energies, skip event " <<endl;
         continue;
@@ -562,10 +559,8 @@ void ProcessFile(TFile *fHad, TFile *fMu){
       nPassThrowsPerEvent = 0;
 
       AllThrowInfo[i_iwritten].resize(a_ND_vtx_vx_vec.size());
-      cout << "I am about to start the 'for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)' loop line 564" << endl;
         for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)
         {
-          cout << "I am running the 'for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)' loop line 565" << endl;
           i_vtxX_plot +=1;
 
 
