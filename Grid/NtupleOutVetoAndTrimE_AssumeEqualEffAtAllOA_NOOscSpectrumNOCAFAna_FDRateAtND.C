@@ -812,7 +812,10 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                      //          << ", Ev rate = " << FDEventRateAtND(cache, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)<<" 1.0 / validThrows "<<1.0 / validThrows<<" coeffs at oa pos: "
                      //          << std::endl;
 
-
+                     if (cacheEtrue) {
+   						 std::cout << "CoefficientsAtOAPos = " << CoefficientsAtOAPos <<
+          		  	     << "FDEventRateAtND_ETrue = " << FDEventRateAtND_ETrue << std::endl;
+                     }
 
 
                       HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon); //*FDEvatNDRate(info.Etrim, info.Emu, OAPos)
