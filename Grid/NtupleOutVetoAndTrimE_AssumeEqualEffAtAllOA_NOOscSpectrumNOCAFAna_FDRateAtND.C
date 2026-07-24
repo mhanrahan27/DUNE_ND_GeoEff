@@ -564,7 +564,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
         for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)
         {
-
+          cout << "I am running the 'for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)' loop line 565" << endl;
           i_vtxX_plot +=1;
 
 
@@ -596,6 +596,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
               //     <<" nPassThrowsPerVtx[i_vtxX_plot] "<<nPassThrowsPerVtx[i_vtxX_plot]
               //     <<"  nPassThrowsPerVtx[i_vtxX_plot -1] "<<  nPassThrowsPerVtx[i_vtxX_plot -1]  <<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ ){
+				cout << "I am running the for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ )" loop line 599" << endl;
                 ThrowInfo info;
 
                 if(TrimEnergyEventsPass->at(ithrow)*1E-3 > 20){
