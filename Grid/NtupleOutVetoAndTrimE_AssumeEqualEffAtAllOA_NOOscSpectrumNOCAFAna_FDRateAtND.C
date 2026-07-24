@@ -608,7 +608,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                 info.weightPmuon = (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
                 // info.muContained = (*muContained)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0];
 
-              //  cout<<" ithrow = "<<ithrow<< " nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1 = "<<nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1<< " p value: "<< (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0]<<endl;
+                cout<<" ithrow = "<<ithrow<< " nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1 = "<<nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1<< " p value: "<< (*weightPmuon)[nPassThrowsPerVtx[i_vtxX_plot-1]+ ithrow+1][0]<<endl;
 
                 AllThrowInfo[i_iwritten][i_vtxX_plot - 1].push_back(info);
 
