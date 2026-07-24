@@ -547,6 +547,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
     for (Int_t i_iwritten = 0; i_iwritten<nFDEvents; i_iwritten++)
     {
+      cout << "Hello" << endl;
       cout<<" i_iwritten: "<<i_iwritten<<" weight CAF like: "<<weightCAFLike[i_iwritten]<<endl;
 
       if(TotalLeptonMom[i_iwritten] > 20) {
