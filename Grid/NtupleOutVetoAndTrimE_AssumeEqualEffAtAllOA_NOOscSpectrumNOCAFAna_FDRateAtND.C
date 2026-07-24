@@ -561,7 +561,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
       nPassThrowsPerEvent = 0;
 
       AllThrowInfo[i_iwritten].resize(a_ND_vtx_vx_vec.size());
-
+      cout << "I am about to start the 'for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)' loop line 564" << endl;
         for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)
         {
           cout << "I am running the 'for (Double_t i_ND_LAr_vtx_pos: a_ND_vtx_vx_vec)' loop line 565" << endl;
