@@ -592,7 +592,6 @@ void ProcessFile(TFile *fHad, TFile *fMu){
               //     <<" nPassThrowsPerVtx[i_vtxX_plot] "<<nPassThrowsPerVtx[i_vtxX_plot]
               //     <<"  nPassThrowsPerVtx[i_vtxX_plot -1] "<<  nPassThrowsPerVtx[i_vtxX_plot -1]  <<" weight P mu size: "<< (*weightPmuon).size()<<endl;
               for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ ){
-				cout << "I am running the for (Int_t ithrow = 0; ithrow < nthrowsToLoop; ithrow++ )" loop line 599" << endl;
                 ThrowInfo info;
 
                 if(TrimEnergyEventsPass->at(ithrow)*1E-3 > 20){
@@ -808,11 +807,6 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                      //          << ", Emu = " << info.Emu*1E-3 <<" vtxX "<<ND_LAr_vtx_pos/100.0<< " det pos: "<<i_ND_LAr_dtctr_pos<< " OAPos "<<OAPos
                      //          << ", Ev rate = " << FDEventRateAtND(cache, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)<<" 1.0 / validThrows "<<1.0 / validThrows<<" coeffs at oa pos: "
                      //          << std::endl;
-
-                     if (cacheEtrue) {
-   						 std::cout << "CoefficientsAtOAPos = " << CoefficientsAtOAPos <<
-          		  	     << "FDEventRateAtND_ETrue = " << FDEventRateAtND_ETrue << std::endl;
-                     }
 
 
                       HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon); //*FDEvatNDRate(info.Etrim, info.Emu, OAPos)
