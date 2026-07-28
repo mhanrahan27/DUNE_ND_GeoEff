@@ -418,14 +418,24 @@ void ProcessFile(TFile *fHad, TFile *fMu){
   TH1D* HistEtrimDetPosWithFDEventRate[nFDEvents][nvtxXpositions][nDetPos];
   TH1D* HistEtrimDetPosCoeff1[nFDEvents][nvtxXpositions][nDetPos];
 
+  //////
+  TH1D* HistEtrimDetPosNoFDEventRateTimesCoeff[nFDEvents][nvtxXpositions][nDetPos];
+  TH1D* HistEtrimDetPosWithFDEventRateTimesCoeff[nFDEvents][nvtxXpositions][nDetPos];
+  //////
+
   TH1D* HistEtrimAllVtxX[nFDEvents];
   TH1D* HistEtrimPmuWeightedAllVtxX[nFDEvents];
 
-  TH1D* HistEtrimAllVtxXTimesCoeff[nFDEvents];
-  TH1D* HistEtrimAllVtxXTimesCoeffOscillated[nFDEvents];
+  TH1D* HistEtrimAllVtxXTimesCoeffNoFDEvRate[nFDEvents];
+  TH1D* HistEtrimAllVtxXTimesCoeffNoFDEvRateOscillated[nFDEvents];
 
   TH1D* HistEtrimAllVtxXTimesCoeffWithFDEvRate[nFDEvents];
   TH1D* HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[nFDEvents];
+  TH1D* HistEtrimAllVtxXNoCoeffWithFDEvRate[nFDEvents];
+  TH1D* HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[nFDEvents];
+  TH1D* HistEtrimAllVtxXNoCoeffNoFDEvRate[nFDEvents];
+  TH1D* HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[nFDEvents];
+
 
   TH1D* HistOAPosVtxX[nFDEvents][nvtxXpositions];
 
@@ -664,16 +674,26 @@ void ProcessFile(TFile *fHad, TFile *fMu){
        TString HistEtrimPmuWeightedAllVtxX_name = Form("HistEtrimPmuWeightedAllVtxX_FDEvt_%d", i_iwritten);
        HistEtrimPmuWeightedAllVtxX[i_iwritten] = new TH1D(HistEtrimPmuWeightedAllVtxX_name, HistEtrimPmuWeightedAllVtxX_name, 25000, 0, 25000);
        //only calculate the linear combination resulting Etrim for either had eff only or combined eff (more memory efficient)
-       TString HistEtrimAllVtxXTimesCoeff_name;
+       TString HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name;
        TString HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name;
-       if(!useCombinedEfficiency)
-         HistEtrimAllVtxXTimesCoeff_name = Form("HistEtrimAllVtxXTimesCoeff_FDEvt_%d", i_iwritten);
+       // madi declared these for no coeffs:
+       TString HistEtrimAllVtxXNoCoeff_name; 
+       TString HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name;
+       if(!useCombinedEfficiency){
+         HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name = Form("HistEtrimAllVtxXTimesCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
+        // madi added these for no coeffs:
+         HistEtrimAllVtxXNoCoeff_NoFDEvRate_name = Form("HistEtrimAllVtxXNoCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
+         HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name = Form("HistEtrimAllVtxXNoCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten); 
+       }
        else{
-         HistEtrimAllVtxXTimesCoeff_name = Form("HistEtrimPmuWeightedAllVtxXTimesCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
+         HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name = Form("HistEtrimPmuWeightedAllVtxXTimesCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
          HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name = Form("HistEtrimPmuWeightedAllVtxXTimesCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten);
+        // madi added these for no coeffs:
+         HistEtrimAllVtxXNoCoeff_NoFDEvRate_name = Form("HistEtrimPmuWeightedAllVtxXNoCoeff_NoFDEvRate_FDEvt_%d", i_iwritten); 
+         HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name = Form("HistEtrimPmuWeightedAllVtxXNoCoeff_FDEvRateAtND_FDEvt_%d", i_iwritten); 
        }
 
-       HistEtrimAllVtxXTimesCoeff[i_iwritten] = new TH1D(HistEtrimAllVtxXTimesCoeff_name, HistEtrimAllVtxXTimesCoeff_name, 25000, 0, 25000);
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten] = new TH1D(HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name, HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name, 25000, 0, 25000);
        HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten] = new TH1D(HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name, HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name, 25000, 0, 25000);
 
        TString NameAllThrownEventsVsOAPosVsTotalETrim = Form("AllThrownEventsVsOAPosVsTotalETrim_FDEvt_%d", i_iwritten);
@@ -762,6 +782,9 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    TString HistEtrimDetPos_name = Form("HistEtrim_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    TString HistEtrimDetPosNoFDEventRate_name = Form("HistVisEtrimNoFDEvRate_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    TString HistEtrimDetPosWithFDEventRate_name = Form("HistEtrimDetPosWithFDEventRate_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
+
+                   TString HistEtrimDetPosNoFDEventRateTimesCoeff_name = Form("HistVisEtrimNoFDEvRateTimesCoeff_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
+                   TString HistEtrimDetPosWithFDEventRateTimesCoeff_name = Form("HistEtrimDetPosWithFDEventRateTimesCoeff_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    //same efficiency at all detecto positions means same events passing the cuts so same HisEtrim[i_vtxX_plot-1]
 
                    //uncomment this line and comment below if interested in lin combination of events with had eff only (no mu eff applied)
@@ -777,6 +800,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1] = new TH1D(HistEtrimDetPosWithFDEventRate_name, HistEtrimDetPosWithFDEventRate_name, 25000, 0, 25000);
                    HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->SetName(HistEtrimDetPosWithFDEventRate_name);
 
+                   HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1] = new TH1D(HistEtrimDetPosNoFDEventRateTimesCoeff_name, HistEtrimDetPosNoFDEventRateTimesCoeff_name, 25000, 0, 25000);
+                   HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->SetName(HistEtrimDetPosNoFDEventRateTimesCoeff_name);
+                   HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1] = new TH1D(HistEtrimDetPosWithFDEventRateTimesCoeff_name, HistEtrimDetPosWithFDEventRateTimesCoeff_name, 25000, 0, 25000);
+                   HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->SetName(HistEtrimDetPosWithFDEventRateTimesCoeff_name);
+
                    // TString HistEtrimDetPosCoeff1_name = Form("HistEtrimCoeff1_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    // HistEtrimDetPosCoeff1[i_iwritten][i_vtxX_plot-1][i_detpos-1] = (TH1D*) HistEtrim[i_iwritten][i_vtxX_plot-1]->Clone();
                    // HistEtrimDetPosCoeff1[i_iwritten][i_vtxX_plot-1][i_detpos-1]->SetName(HistEtrimDetPosCoeff1_name);
@@ -789,10 +817,12 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    for (const auto& info : throwList) {
 
                       HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon); //*FDEvatNDRate(info.Etrim, info.Emu, OAPos)
-                      HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos)); //FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)* weightCAFLike[i_iwritten] );
+                      HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos));//FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
+                      HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon); //*FDEvatNDRate(info.Etrim, info.Emu, OAPos)
+                      HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Fill(info.Etrim + info.Emu , info.weightPmuon * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos));//FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
 
-                      SelectedEventsVsOAPosVsTotalETrim[i_iwritten]->Fill((info.Etrim + info.Emu)/1000 ,OAPos, info.weightPmuon* 1.0/WeightEventsAtOaPos  * weightCAFLike[i_iwritten] * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos)); //* FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
-                      AllThrownEventsVsOAPosVsTotalETrim[i_iwritten]->Fill((info.Etrim + info.Emu)/1000 , OAPos, double(validThrows)/throwList.size()* 1.0/WeightEventsAtOaPos * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos)); // FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
+                      SelectedEventsVsOAPosVsTotalETrim[i_iwritten]->Fill((info.Etrim + info.Emu)/1000 ,OAPos, info.weightPmuon* 1.0/WeightEventsAtOaPos  * weightCAFLike[i_iwritten] * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos));//FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
+                      AllThrownEventsVsOAPosVsTotalETrim[i_iwritten]->Fill((info.Etrim + info.Emu)/1000 , OAPos, double(validThrows)/throwList.size()* 1.0/WeightEventsAtOaPos * FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos));// FDEventRateAtND(cacheLepHad, info.Etrim *1E-3 , info.Emu*1E-3, OAPos));
                    //   cout<<" rate "<< " Etrim " <<info.Etrim *1E-3<<" emu "<< info.Emu*1E-3<< "  OApos" <<OAPos<<" vtx x = "<<ND_LAr_vtx_pos/100.0 <<"det pos = "<<a_ND_off_axis_pos_vec[i_detpos-1] <<" rate: "<<FDEventRateAtND(cache, info.Etrim *1E-3 , info.Emu*1E-3, OAPos)<<" nthrowspass: "<< NPassedThrows<< " entries in histo = "<< HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->GetEntries()<<endl;
                    }
                   // cout<<" event nr = "<<i_iwritten<<" Enu = "<<EnuTrue[i_iwritten]<<" FD Event Rate at ND (Etrue) = "<<FDEventRateAtND_ETrue(cacheEtrue, EnuTrue[i_iwritten], OAPos) <<endl;
@@ -801,8 +831,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    // HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Write(HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->GetName());
                    // HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Write(HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->GetName());
 				   //===== the following are copied from the NoOsc Ntuple file (Madi attempt to add linCoeff)
-				   HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
-				   HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
+				   HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
+           HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
+
+           HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
+           HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
 
                 }//end LAr pos
 
@@ -837,44 +870,44 @@ void ProcessFile(TFile *fHad, TFile *fMu){
       // HistEtrimPmuWeightedAllVtxX[i_iwritten]->Write(HistEtrimPmuWeightedAllVtxX[i_iwritten]->GetName());
 
       //----add together all visEtrim (hadron and muon efficiency ) with OA coeffs applied at all vtxX and detPos -> final distribution of the FD event at ND
-       HistEtrimAllVtxXTimesCoeff[i_iwritten] = (TH1D*)HistEtrimDetPosNoFDEventRate[i_iwritten][0][0]->Clone();
-       HistEtrimAllVtxXTimesCoeff[i_iwritten]->Reset();
-       HistEtrimAllVtxXTimesCoeff[i_iwritten]->SetName(HistEtrimAllVtxXTimesCoeff_name);
-       HistEtrimAllVtxXTimesCoeff[i_iwritten]->SetTitle(Form("TotalFD Energy = %.2f MeV", totEnergyFDatND_f));
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten] = (TH1D*)HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][0][0]->Clone();
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Reset();
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXTimesCoeffNoFDEvRate_name);
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->SetTitle(Form("TotalFD Energy = %.2f MeV", totEnergyFDatND_f));
 
        for(int ivtxX = 0; ivtxX < nvtxXpositions; ivtxX++){
          for(int iDetPos = 0; iDetPos < nDetPos; iDetPos++){
-           if(HistEtrimDetPosNoFDEventRate[i_iwritten][ivtxX][iDetPos]->GetEntries() > 0){
-             HistEtrimAllVtxXTimesCoeff[i_iwritten]->Add(HistEtrimDetPosNoFDEventRate[i_iwritten][ivtxX][iDetPos]);
+           if(HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][ivtxX][iDetPos]->GetEntries() > 0){
+             HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Add(HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][ivtxX][iDetPos]);
            }
-               delete HistEtrimDetPosNoFDEventRate[i_iwritten][ivtxX][iDetPos];
+               delete HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][ivtxX][iDetPos];
 
          }
        }
        //scale to 1/nVtx and 1/dePos (to get average efficiency after summing over all vtxX and detPos ) - each Etrim hist [vtx][detpos] has integral = combined efficiency (vtxX) before applying OACoeffs
-       HistEtrimAllVtxXTimesCoeff[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
-       HistEtrimAllVtxXTimesCoeff[i_iwritten]->Scale(1.0/nDetPos);
-       HistEtrimAllVtxXTimesCoeff[i_iwritten]->Write(HistEtrimAllVtxXTimesCoeff[i_iwritten]->GetName());
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Scale(1.0/nDetPos);
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Write(HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->GetName());
 
        cout<<" total DetPos: "<<nDetPos<<endl;
        //Get the oscillated spectrum: scale to Posc(Enu)
-       HistEtrimAllVtxXTimesCoeffOscillated[i_iwritten] = (TH1D*)HistEtrimAllVtxXTimesCoeff[i_iwritten]->Clone();
-       HistEtrimAllVtxXTimesCoeffOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
-       HistEtrimAllVtxXTimesCoeffOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXTimesCoeff_FDEvt_%d", i_iwritten));
-       HistEtrimAllVtxXTimesCoeffOscillated[i_iwritten]->Write();
+       HistEtrimAllVtxXTimesCoeffNoFDEvRateOscillated[i_iwritten] = (TH1D*)HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Clone();
+       HistEtrimAllVtxXTimesCoeffNoFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
+       HistEtrimAllVtxXTimesCoeffNoFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXTimesCoeffNoFDEvRate_FDEvt_%d", i_iwritten));
+       HistEtrimAllVtxXTimesCoeffNoFDEvRateOscillated[i_iwritten]->Write();
 
        //---add together all visEtrim (hadron and muon efficiency ) with OA coeffs applied and FD event rate at ND, at all vtxX and detPos -> final distribution of the FD event at ND(account for FD ev rate at ND)
-       HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten] = (TH1D*) HistEtrimDetPosWithFDEventRate[i_iwritten][0][0]->Clone();
+       HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten] = (TH1D*) HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][0][0]->Clone();
        HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Reset();
        HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name);
        HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->SetTitle(Form("Total hadronic FD Energy = %.2f MeV", totEnergyFDatND_f));
 
        for(int ivtxX = 0; ivtxX < nvtxXpositions; ivtxX++){
          for(int iDetPos = 0; iDetPos < nDetPos; iDetPos++){
-           if(HistEtrimDetPosWithFDEventRate[i_iwritten][ivtxX][iDetPos]->GetEntries() > 0){
-             HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Add(HistEtrimDetPosWithFDEventRate[i_iwritten][ivtxX][iDetPos]);
+           if(HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][ivtxX][iDetPos]->GetEntries() > 0){
+             HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Add(HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][ivtxX][iDetPos]);
            }
-               delete HistEtrimDetPosWithFDEventRate[i_iwritten][ivtxX][iDetPos];
+               delete HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][ivtxX][iDetPos];
 
          }
        }
@@ -885,9 +918,64 @@ void ProcessFile(TFile *fHad, TFile *fMu){
        //get the oscillated spectrum: scale to Posc(Enu)
        HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten] = (TH1D*) HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Clone();
        HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
-       cout<< "aaaaaaa enu = "<<EnuTrue[i_iwritten]<<" P = "<<calc->P(14,14,EnuTrue[i_iwritten])<<endl;
+       cout<< "enu = "<<EnuTrue[i_iwritten]<<" P = "<<calc->P(14,14,EnuTrue[i_iwritten])<<endl;
        HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXTimesCoeffWithFDEvRateAtND_FDEvt_%d", i_iwritten));
        HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten]->Write();
+
+       //////////////////////////////////////////////////////////
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten] = (TH1D*) HistEtrimDetPosWithFDEventRate[i_iwritten][0][0]->Clone();
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Reset();
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name);
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->SetTitle(Form("Total hadronic FD Energy = %.2f MeV", totEnergyFDatND_f));
+
+       for(int ivtxX = 0; ivtxX < nvtxXpositions; ivtxX++){
+         for(int iDetPos = 0; iDetPos < nDetPos; iDetPos++){
+           if(HistEtrimDetPosWithFDEventRate[i_iwritten][ivtxX][iDetPos]->GetEntries() > 0){
+             HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Add(HistEtrimDetPosWithFDEventRate[i_iwritten][ivtxX][iDetPos]);
+           }
+               delete HistEtrimDetPosWithFDEventRate[i_iwritten][ivtxX][iDetPos];
+
+         }
+       }
+
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Scale(1.0/nDetPos);
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Write(HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->GetName());
+       //get the oscillated spectrum: scale to Posc(Enu)
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten] = (TH1D*) HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Clone();
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
+       cout<< "enu = "<<EnuTrue[i_iwritten]<<" P = "<<calc->P(14,14,EnuTrue[i_iwritten])<<endl;
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXNoCoeffWithFDEvRateAtND_FDEvt_%d", i_iwritten));
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]->Write();
+
+       /////////////////////////////////
+       //---add together all visEtrim (hadron and muon efficiency ) WITHOUT OA coeffs applied and WITHOUT FD event rate at ND, at all vtxX and detPos -> final distribution of the FD event at ND(account for FD ev rate at ND)
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten] = (TH1D*) HistEtrimDetPosNoFDEventRate[i_iwritten][0][0]->Clone();
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Reset();
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXNoCoeff_NoFDEvRateAtND_name);
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->SetTitle(Form("Total hadronic FD Energy = %.2f MeV", totEnergyFDatND_f));
+
+       for(int ivtxX = 0; ivtxX < nvtxXpositions; ivtxX++){
+         for(int iDetPos = 0; iDetPos < nDetPos; iDetPos++){
+           if(HistEtrimDetPosNoFDEventRate[i_iwritten][ivtxX][iDetPos]->GetEntries() > 0){
+             HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Add(HistEtrimDetPosNoFDEventRate[i_iwritten][ivtxX][iDetPos]);
+           }
+               delete HistEtrimDetPosNoFDEventRate[i_iwritten][ivtxX][iDetPos];
+
+         }
+       }
+
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Scale(1.0/nDetPos);
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Write(HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->GetName());
+       //get the oscillated spectrum: scale to Posc(Enu)
+       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten] = (TH1D*) HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Clone();
+       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
+       cout<< "enu = "<<EnuTrue[i_iwritten]<<" P = "<<calc->P(14,14,EnuTrue[i_iwritten])<<endl;
+       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXNoCoeffNoFDEvRateAtND_FDEvt_%d", i_iwritten));
+       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]->Write();
+
+       ////////////////////////////////////////////////////////
 
        //get oscillated spectrum
        SelectedEventsVsOAPosVsTotalETrim[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
@@ -904,6 +992,10 @@ void ProcessFile(TFile *fHad, TFile *fMu){
        delete HistOAPos[i_iwritten];
        delete HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten];
        delete HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten];
+       delete HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]; // *******************
+       delete HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]; // *******************
+       delete HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]; // *******************
+       delete HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]; // *******************
        delete SelectedEventsVsOAPosVsTotalETrim[i_iwritten];
        delete AllThrownEventsVsOAPosVsTotalETrim[i_iwritten];
 
