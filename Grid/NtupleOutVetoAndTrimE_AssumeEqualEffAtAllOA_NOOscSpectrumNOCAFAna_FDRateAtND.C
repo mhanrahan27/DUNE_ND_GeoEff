@@ -768,8 +768,8 @@ void ProcessFile(TFile *fHad, TFile *fMu){
                    TString HistEtrimDetPosNoFDEventRate_name = Form("HistVisEtrimNoFDEvRate_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    TString HistEtrimDetPosWithFDEventRate_name = Form("HistEtrimDetPosWithFDEventRate_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    
-                   TString HistEtrimDetPosNoFDEventRateTimesCoeff_name = Form("HistVisEtrimNoFDEvRate_FDEvt_TimesCoeff_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
-                   TString HistEtrimDetPosWithFDEventRateTimesCoeff_name = Form("HistEtrimDetPosWithFDEventRate_FDEvt_TimesCoeff_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
+                   TString HistEtrimDetPosNoFDEventRateTimesCoeff_name = Form("HistVisEtrimNoFDEvRateTimesCoeff_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
+                   TString HistEtrimDetPosWithFDEventRateTimesCoeff_name = Form("HistEtrimDetPosWithFDEventRateTimesCoeff_FDEvt_%d_vtxXpost_%f_DetPos_%f", i_iwritten, i_ND_LAr_vtx_pos, a_ND_off_axis_pos_vec[i_detpos-1] );
                    //same efficiency at all detector positions means same events passing the cuts so same HisEtrim[i_vtxX_plot-1]
 
                    //uncomment this line and comment below if interested in lin combination of events with had eff only (no mu eff applied)
