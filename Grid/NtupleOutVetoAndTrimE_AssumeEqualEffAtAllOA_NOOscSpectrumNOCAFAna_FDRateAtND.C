@@ -824,11 +824,11 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
                    // Madi adding coefficients to scaling: 
 
-                   HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows);
-                   HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows);
+                   HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
+                   HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
 
-                   HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos);
-                   HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos);
+                   HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
+                   HistEtrimDetPosWithFDEventRateTimesCoeff[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos * weightCAFLike[i_iwritten]);
                    //====scale events to 1/validThrows (alreays have nPAssingThrows events in Etrim histos. by applying weightPmuon the muon efficiency is accounted for -> integral of Etrim histo [vtxX][detPos] = CombinedEff [vtxX]
                    // HistEtrimDetPosNoFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows );//* 1.0/WeightEventsAtOaPos);// * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos);
                    // HistEtrimDetPosWithFDEventRate[i_iwritten][i_vtxX_plot-1][i_detpos-1]->Scale(1.0/validThrows );//* 1.0/WeightEventsAtOaPos);// * CoefficientsAtOAPos * 1.0/WeightEventsAtOaPos);
