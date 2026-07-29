@@ -677,7 +677,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
        TString HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name;
        TString HistEtrimAllVtxXTimesCoeff_FDEvRateAtND_name;
        // madi declared these for no coeffs:
-       TString HistEtrimAllVtxXNoCoeff_name; 
+       TString HistEtrimAllVtxXNoCoeff_NoFDEvRate_name; 
        TString HistEtrimAllVtxXNoCoeff_FDEvRateAtND_name;
        if(!useCombinedEfficiency){
          HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name = Form("HistEtrimAllVtxXTimesCoeff_NoFDEvRate_FDEvt_%d", i_iwritten);
@@ -872,7 +872,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
       //----add together all visEtrim (hadron and muon efficiency ) with OA coeffs applied at all vtxX and detPos -> final distribution of the FD event at ND
        HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten] = (TH1D*)HistEtrimDetPosNoFDEventRateTimesCoeff[i_iwritten][0][0]->Clone();
        HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->Reset();
-       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXTimesCoeffNoFDEvRate_name);
+       HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXTimesCoeff_NoFDEvRate_name);
        HistEtrimAllVtxXTimesCoeffNoFDEvRate[i_iwritten]->SetTitle(Form("TotalFD Energy = %.2f MeV", totEnergyFDatND_f));
 
        for(int ivtxX = 0; ivtxX < nvtxXpositions; ivtxX++){
@@ -952,7 +952,7 @@ void ProcessFile(TFile *fHad, TFile *fMu){
        //---add together all visEtrim (hadron and muon efficiency ) WITHOUT OA coeffs applied and WITHOUT FD event rate at ND, at all vtxX and detPos -> final distribution of the FD event at ND(account for FD ev rate at ND)
        HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten] = (TH1D*) HistEtrimDetPosNoFDEventRate[i_iwritten][0][0]->Clone();
        HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Reset();
-       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXNoCoeff_NoFDEvRateAtND_name);
+       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->SetName(HistEtrimAllVtxXNoCoeff_NoFDEvRate_name);
        HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->SetTitle(Form("Total hadronic FD Energy = %.2f MeV", totEnergyFDatND_f));
 
        for(int ivtxX = 0; ivtxX < nvtxXpositions; ivtxX++){
@@ -987,8 +987,6 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
        // HistOAPos[i_iwritten]->Write(Form("HistOAPos_FDEvt_%d", i_iwritten));
 
-       delete HistEtrimAllVtxXTimesCoeff[i_iwritten];
-       delete HistEtrimAllVtxXTimesCoeffOscillated[i_iwritten];
        delete HistOAPos[i_iwritten];
        delete HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten];
        delete HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten];
