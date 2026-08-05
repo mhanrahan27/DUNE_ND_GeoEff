@@ -978,16 +978,29 @@ void ProcessFile(TFile *fHad, TFile *fMu){
 
          }
        }
-
-       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
-       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Scale(1.0/nDetPos);
-       HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Write(HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->GetName());
+       
+       // scale the histos with FD Event Rates:
+       // this is the histo with NO coeffs, WITH FD Event Rate:
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Scale(1.0/nDetPos);
+       HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Write(HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->GetName());
        //get the oscillated spectrum: scale to Posc(Enu)
-       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten] = (TH1D*) HistEtrimAllVtxXNoCoeffNoFDEvRate[i_iwritten]->Clone();
-       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten] = (TH1D*) HistEtrimAllVtxXNoCoeffWithFDEvRate[i_iwritten]->Clone();
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
        cout<< "enu = "<<EnuTrue[i_iwritten]<<" P = "<<calc->P(14,14,EnuTrue[i_iwritten])<<endl;
-       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXNoCoeffNoFDEvRateAtND_FDEvt_%d", i_iwritten));
-       HistEtrimAllVtxXNoCoeffNoFDEvRateOscillated[i_iwritten]->Write();
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXNoCoeffWithFDEvRateAtND_FDEvt_%d", i_iwritten));
+       HistEtrimAllVtxXNoCoeffWithFDEvRateOscillated[i_iwritten]->Write();
+
+       // this is the histo WITH coeffs, WITH FD Event Rate:
+       HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Scale(1.0/ND_vtx_vx_vec_size);
+       HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Scale(1.0/nDetPos);
+       HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Write(HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->GetName());
+       //get the oscillated spectrum: scale to Posc(Enu)
+       HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten] = (TH1D*) HistEtrimAllVtxXTimesCoeffWithFDEvRate[i_iwritten]->Clone();
+       HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
+       cout<< "enu = "<<EnuTrue[i_iwritten]<<" P = "<<calc->P(14,14,EnuTrue[i_iwritten])<<endl;
+       HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten]->SetName( Form("NuOscHistEtrimPmuWeightedAllVtxXTimesCoeffWithFDEvRateAtND_FDEvt_%d", i_iwritten));
+       HistEtrimAllVtxXTimesCoeffWithFDEvRateOscillated[i_iwritten]->Write();
 
        //get oscillated spectrum
        SelectedEventsVsOAPosVsTotalETrim[i_iwritten]->Scale(calc->P(14,14,EnuTrue[i_iwritten]));
